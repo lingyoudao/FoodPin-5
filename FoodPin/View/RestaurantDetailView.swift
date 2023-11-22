@@ -30,19 +30,30 @@ struct RestaurantDetailView: View {
                                 .foregroundColor(restaurant.isFavorite ?.yellow:.white)
                                 .padding(.top, 40)
                             
-                            VStack(alignment: .leading, spacing: 5){
-                                Text(restaurant.name)
-                                    .font(.custom("Nunito_Regular", size: 35, relativeTo: .largeTitle))
-                                    .bold()
-                                
-                                Text(restaurant.type)
-                                    .font(.system(.headline, design: .rounded))
-                                    .padding(.all, 5)
-                                    .background(Color.black)
-                            }
-                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0,  maxHeight: .infinity, alignment: .bottomLeading)
-                            .foregroundColor(.white)
+                            HStack (alignment: .bottom){
+                                VStack(alignment: .leading, spacing: 5){
+                                    Text(restaurant.name)
+                                        .font(.custom("Nunito_Regular", size: 35, relativeTo: .largeTitle))
+                                        .bold()
+                                    
+                                    Text(restaurant.type)
+                                        .font(.system(.headline, design: .rounded))
+                                        .padding(.all, 5)
+                                        .background(Color.black)
+                                }
+                                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0,  maxHeight: .infinity, alignment: .bottomLeading)
+                                .foregroundColor(.white)
                             .padding()
+                                
+                                if let rating = restaurant.rating, !showReview{
+                                    Image(rating.image)
+                                        .resizable()
+                                        .frame(width: 60, height: 60)
+                                        .padding([.bottom, .trailing])
+                                        .transition(.scale)
+                                }
+                            }
+                            .animation(.spring(response: 0.2, dampingFraction: 0.3, blendDuration: 0.3), value: restaurant.rating)
                         }
                     }
                 Text(restaurant.description)
